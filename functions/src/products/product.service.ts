@@ -1,6 +1,7 @@
 import { ProductRepository } from "./product.repository";
 import { Product } from "../models/product";
 import { Stock } from "../models/stock";
+import {Order} from '../models/order';
 
 export class ProductService {
 
@@ -22,5 +23,19 @@ export class ProductService {
 
   renameProduct(productId: string, beforeP: Product, afterP: Product) {
     return this.productRepository.renameProduct(productId, beforeP,afterP);
+  }
+
+  buyProduct(orderId: any) {
+    const order: Order = this.createFakeOrder();
+    return this.productRepository.buyProduct(orderId, order);
+  }
+
+  createFakeOrder(): Order {
+    const stockDocument: Order = {
+      productBID: "N4QCC6aCrCt6ykSXHH5Y",
+      productBName: "CAHAAAWNGEkkkDAMNIT",
+      productBCount: 1
+    }
+    return stockDocument;
   }
 }

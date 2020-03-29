@@ -15,8 +15,11 @@ export class ProductControllerFirebase implements ProductController {
   renameProduct(snap: Change<DocumentSnapshot>, context: EventContext): Promise<void> {
     const beforeP = snap.before.data() as Product;
     const afterP = snap.before.data() as Product;
-    console.log(context.params);
     return this.productService.renameProduct(context.params.productId, beforeP,afterP);
+  }
+
+  buyProduct(snap: FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>, context: EventContext): Promise<void> {
+    return this.productService.buyProduct(context.params.orderId);
   }
 
 }
