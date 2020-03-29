@@ -19,4 +19,8 @@ export class ProductService {
     }
     return stockDocument;
   }
+
+  renameProduct(productId: string, beforeP: Product, afterP: Product) {
+    return this.productRepository.renameProduct(productId, beforeP,afterP);
+  }
 }
