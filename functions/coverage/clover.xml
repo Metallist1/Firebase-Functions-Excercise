@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1585471966248" clover="3.2.0">
+  <project timestamp="1585471966248" name="All files">
+    <metrics statements="11" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="2" elements="17" coveredelements="6" complexity="0" loc="11" ncloc="11" packages="1" files="1" classes="1"/>
+    <file name="product.service.ts" path="C:\Users\MrPc\Desktop\New folder\Function-project\functions\src\products\product.service.ts">
+      <metrics statements="11" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="2"/>
+      <line num="6" count="1" type="stmt"/>
+      <line num="8" count="2" type="stmt"/>
+      <line num="12" count="0" type="stmt"/>
+      <line num="13" count="0" type="stmt"/>
+      <line num="17" count="2" type="stmt"/>
+      <line num="21" count="2" type="stmt"/>
+      <line num="25" count="0" type="stmt"/>
+      <line num="29" count="0" type="stmt"/>
+      <line num="30" count="0" type="stmt"/>
+      <line num="34" count="0" type="stmt"/>
+      <line num="39" count="0" type="stmt"/>
+    </file>
+  </project>
+</coverage>
