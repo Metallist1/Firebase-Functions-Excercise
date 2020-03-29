@@ -33,19 +33,20 @@ export class ProductRepositoryFirebase implements ProductRepository {
 
 
   private checkStockForRenameInOrders(productId: string, beforeP: Product, afterP: Product) :Promise<any>  {
-    return admin.firestore().doc(`Orders/${productId}`).get().then(function(doc) {
-      const stock = doc.data() as Stock;
-      stock.productID = afterP.name;
+    //Gets the orderline subcollections where the productName equals that of the updated product, and sets it's productName to the after product name
+    return admin.firestore().collectionGroup('Orderlist').where('productBID', '==', productId).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        const order = doc.data() as Order;
+        const orderId: string = doc.ref.parent.parent!.id;
 
-      admin.firestore()
-        .doc(`Stock/${productId}`)
-        .update(stock).catch()
-        .catch(error => {
-          console.log(error);
-        });
-    }).catch(error =>{
-      console.log(error);
-    });
+        order.productBName = afterP.name;
+        admin.firestore().collectionGroup('Orderlist');
+        admin.firestore().collection('Orders').doc(orderId).collection('Orderlist').doc(doc.id).update(order).catch();
+      });
+    })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   buyProduct(orderId: any, order: Order): Promise<any> {
