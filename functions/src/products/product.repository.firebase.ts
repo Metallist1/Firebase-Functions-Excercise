@@ -7,6 +7,7 @@ import {Order} from '../models/order';
 
 export class ProductRepositoryFirebase implements ProductRepository {
   addProductToStock(productId: string, stock: Stock): Promise<any> {
+    console.log(productId,stock);
     return admin.firestore().doc(`Stock/${productId}`).set(stock).catch();
   }
 

@@ -9,6 +9,7 @@ export class ProductControllerFirebase implements ProductController {
 
   addProductToStock(snap: DocumentSnapshot, context: EventContext): Promise<void> {
     const product = snap.data() as Product;
+    console.log(snap.data());
     return this.productService.addProductToStock(context.params.productId, product);
   }
 

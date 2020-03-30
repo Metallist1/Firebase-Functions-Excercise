@@ -9,14 +9,15 @@ export class ProductService {
   }
 
   addProductToStock(productId: string, product: Product): Promise<any> {
-    const stock: Stock = this.createStock(product);
+    const stock: Stock = this.createStock(product.name,5);
+    console.log(product);
     return this.productRepository.addProductToStock(productId, stock);
   }
 
-  createStock(product: Product): Stock {
+  createStock(product: string, inStock:number): Stock {
     const stockDocument: Stock = {
-      productID: product.name,
-      productStockCount: 5
+      productID: product,
+      productStockCount: inStock
     }
     return stockDocument;
   }
@@ -25,16 +26,23 @@ export class ProductService {
     return this.productRepository.renameProduct(productId, beforeP,afterP);
   }
 
-  buyProduct(orderId: any) {
-    const order: Order = this.createFakeOrder();
-    return this.productRepository.buyProduct(orderId, order);
+
+  //Buy orders
+  buyProduct(orderId: string) : Promise<any>{
+    const order: Order = this.createOrder("N4QCC6aCrCt6ykSXHH5Y","CAHAAAWNGEkkkDAMNIT",1); //Create Fake order, later on replace with real order
+   return this.buyProductInDatabase(orderId,order); // Call seperate method for generating order. So methods can be split for TDD.
   }
 
-  createFakeOrder(): Order {
+  //Go to repository and execute buy command
+  buyProductInDatabase(orderId: string, order: Order): Promise<any>{
+    return this.productRepository.buyProduct(orderId, order);
+  }
+  //Generate fake order.
+  createOrder(productID:string,productName:string,productCount:number): Order {
     const stockDocument: Order = {
-      productBID: "N4QCC6aCrCt6ykSXHH5Y",
-      productBName: "CAHAAAWNGEkkkDAMNIT",
-      productBCount: 1
+      productBID: productID,
+      productBName: productName,
+      productBCount: productCount
     }
     return stockDocument;
   }
