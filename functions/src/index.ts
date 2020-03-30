@@ -4,7 +4,13 @@ import { DependencyFactory } from './dependency-factory';
 
 const dependencyFactory = new DependencyFactory();
 
-admin.initializeApp();
+const serviceAccount = require('../service-account.json')
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://function-test-project-7e981.firebaseio.com"'
+})
+
 //Using tdd and functions (write-trigger) whenever a new product is added to products collection it will be created in stock with a count of 5.
 export const addProduct = functions.firestore
   .document('products/{productId}')

@@ -10,7 +10,6 @@ export class ProductService {
 
   addProductToStock(productId: string, product: Product): Promise<any> {
     const stock: Stock = this.createStock(product.name,5);
-    console.log(product);
     return this.productRepository.addProductToStock(productId, stock);
   }
 
@@ -28,8 +27,7 @@ export class ProductService {
 
 
   //Buy orders
-  buyProduct(orderId: string) : Promise<any>{
-    const order: Order = this.createOrder("N4QCC6aCrCt6ykSXHH5Y","CAHAAAWNGEkkkDAMNIT",1); //Create Fake order, later on replace with real order
+  buyProduct(orderId: string, order:Order) : Promise<any>{
    return this.buyProductInDatabase(orderId,order); // Call seperate method for generating order. So methods can be split for TDD.
   }
 
@@ -37,13 +35,5 @@ export class ProductService {
   buyProductInDatabase(orderId: string, order: Order): Promise<any>{
     return this.productRepository.buyProduct(orderId, order);
   }
-  //Generate fake order.
-  createOrder(productID:string,productName:string,productCount:number): Order {
-    const stockDocument: Order = {
-      productBID: productID,
-      productBName: productName,
-      productBCount: productCount
-    }
-    return stockDocument;
-  }
+
 }
