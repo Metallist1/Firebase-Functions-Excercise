@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.77% </span>
+                <span class="strong">80.77% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/26</span>
+                <span class='fraction'>21/26</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.43% </span>
+                <span class="strong">64.29% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/14</span>
+                <span class='fraction'>9/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.77% </span>
+                <span class="strong">80.77% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/26</span>
+                <span class='fraction'>21/26</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -145,20 +145,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -168,14 +168,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -219,17 +219,17 @@ export class ProductRepositoryFirebase implements ProductRepository {
     return admin.firestore().doc(`Stock/${productId}`).set(stock).catch();
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  renameProduct(</span>productId: string, beforeP: Product, afterP: Product): Promise&lt;any&gt;  {
-<span class="cstat-no" title="statement not covered" >    this.checkStockForRenameInStock(productId,afterP);</span>
-<span class="cstat-no" title="statement not covered" >    return this.checkStockForRenameInOrders(productId,beforeP,afterP);</span>
+  renameProduct(productId: string, beforeP: Product, afterP: Product): Promise&lt;any&gt;  {
+    this.checkStockForRenameInStock(productId,afterP);
+    return this.checkStockForRenameInOrders(productId,beforeP,afterP);
   }
 &nbsp;
- private <span class="fstat-no" title="function not covered" >checkStockForRenameInStock(</span>productId: string, afterP: Product)  {
-<span class="cstat-no" title="statement not covered" >    admin.firestore().doc(`Stock/${productId}`).get().then(<span class="fstat-no" title="function not covered" >function(d</span>oc) {</span>
-      const stock = <span class="cstat-no" title="statement not covered" >doc.data() as Stock;</span>
-<span class="cstat-no" title="statement not covered" >      stock.productID = afterP.name;</span>
+ private checkStockForRenameInStock(productId: string, afterP: Product)  {
+    admin.firestore().doc(`Stock/${productId}`).get().then(function(doc) {
+      const stock = doc.data() as Stock;
+      stock.productID = afterP.name;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      admin.firestore()</span>
+      admin.firestore()
        .doc(`Stock/${productId}`)
        .update(stock).catch()
        .catch(<span class="fstat-no" title="function not covered" >error </span>=&gt; {
@@ -241,16 +241,16 @@ export class ProductRepositoryFirebase implements ProductRepository {
    };
 &nbsp;
 &nbsp;
-  private <span class="fstat-no" title="function not covered" >checkStockForRenameInOrders(</span>productId: string, beforeP: Product, afterP: Product) :Promise&lt;any&gt;  {
+  private checkStockForRenameInOrders(productId: string, beforeP: Product, afterP: Product) :Promise&lt;any&gt;  {
     //Gets the orderline subcollections where the productName equals that of the updated product, and sets it's productName to the after product name
-<span class="cstat-no" title="statement not covered" >    return admin.firestore().collectionGroup('Orderlist').where('productBID', '==', productId).get().then(<span class="fstat-no" title="function not covered" >function(q</span>uerySnapshot) {</span>
-<span class="cstat-no" title="statement not covered" >      querySnapshot.forEach(<span class="fstat-no" title="function not covered" >function(d</span>oc) {</span>
-        const order = <span class="cstat-no" title="statement not covered" >doc.data() as Order;</span>
-        const orderId: string = <span class="cstat-no" title="statement not covered" >doc.ref.parent.parent!.id;</span>
+    return admin.firestore().collectionGroup('Orderlist').where('productBID', '==', productId).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        const order = doc.data() as Order;
+        const orderId: string = doc.ref.parent.parent!.id;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        order.productBName = afterP.name;</span>
-<span class="cstat-no" title="statement not covered" >        admin.firestore().collectionGroup('Orderlist');</span>
-<span class="cstat-no" title="statement not covered" >        admin.firestore().collection('Orders').doc(orderId).collection('Orderlist').doc(doc.id).update(order).catch();</span>
+        order.productBName = afterP.name;
+        admin.firestore().collectionGroup('Orderlist');
+        admin.firestore().collection('Orders').doc(orderId).collection('Orderlist').doc(doc.id).update(order).catch();
       });
     })
       .catch(<span class="fstat-no" title="function not covered" >error </span>=&gt; {
@@ -289,7 +289,7 @@ export class ProductRepositoryFirebase implements ProductRepository {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Mar 30 2020 17:04:24 GMT+0200 (Central European Summer Time)
+                at Tue Mar 31 2020 06:13:49 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
