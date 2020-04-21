@@ -35,5 +35,4 @@ export class ProductService {
   buyProductInDatabase(orderId: string, order: Order): Promise<any>{
     return this.productRepository.buyProduct(orderId, order);
   }
-
 }
