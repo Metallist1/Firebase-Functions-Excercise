@@ -1,0 +1,24 @@
+<div class="col">
+  <div *ngIf="Products">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let product of Products | async">
+        <td>{{ product.uid }}</td>
+        <td>{{ product.name }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="editTodo(product)">Edit</button>
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="deleteProduct(product.uid)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

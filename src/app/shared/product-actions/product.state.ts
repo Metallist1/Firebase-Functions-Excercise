@@ -2,18 +2,20 @@
 import {Product} from '../entities/product';
 import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {ProductService} from './product.service';
-import {DeleteProduct, ReadProducts, UpdateExistingProduct, WriteNewProduct} from './product.action';
+import {DeleteProduct, ReadProducts, SetSelectedProduct, UpdateExistingProduct, WriteNewProduct} from './product.action';
 import {tap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 
 export class ProductStateModel {
-  productas: Product;
+  products: Product[];
+  selectedProduct: Product;
 }
 
 @State<ProductStateModel>({
   name: 'product',
   defaults: {
-    productas: undefined
+    products: [],
+    selectedProduct: undefined
   }
 })
 @Injectable()
@@ -23,56 +25,66 @@ export class ProductState {
   }
 
   @Selector()
-  static loggedInUser(state: ProductStateModel) {
-    return state.productas;
+  static getALLProduct(state: ProductStateModel) {
+    return state.products;
   }
-
+  @Selector()
+  static getSelectedProduct(state: ProductStateModel) {
+    return state.selectedProduct;
+  }
   @Action(ReadProducts)
-  ReadProductsFromBase({getState, setState}: StateContext<ProductStateModel>) {
-    return this.productService
-      .ReadProductsFromBase().pipe(
-        tap((result) => {
-          const state = getState();
-          setState({
-            ...state,
-            productas: result,
-          });
-        }));
+  getProducts({getState, setState}: StateContext<ProductStateModel>) {
+    return this.productService.ReadProductsFromBase().pipe(tap((result) => {
+      const state = getState();
+      setState({
+        ...state,
+        products: result,
+      });
+    }));
   }
   @Action(WriteNewProduct)
-  WriteProducts({getState, setState}: StateContext<ProductStateModel>) {
-    return this.productService.CreateProductInBase()
-      .pipe(tap((result) => {
-        const state = getState();
-        setState({
-          ...state,
-          productas: undefined,
-        });
-      }));
+  WriteProducts({getState, patchState}: StateContext<ProductStateModel>, {payload}: WriteNewProduct) {
+    return this.productService.CreateProductInBase(payload).then((result) => {
+      const state = getState();
+      patchState({
+        products: [...state.products, result]
+      });
+    });
   }
 
   @Action(UpdateExistingProduct)
-  UpdateProducts({getState, setState}: StateContext<ProductStateModel>) {
-    return this.productService.UpdateProductInBase()
-      .pipe(tap((result) => {
-        const state = getState();
-        setState({
-          ...state,
-          productas: undefined,
-        });
-      }));
+  UpdateProduct({getState, setState}: StateContext<ProductStateModel>, {payload}: UpdateExistingProduct) {
+    return this.productService.UpdateProductInBase(payload).then((result) => {
+      const state = getState();
+      const productList = [...state.products];
+      const productIndex = productList.findIndex(item => item.uid === payload.uid);
+      productList[productIndex] = payload;
+      setState({
+        ...state,
+        products: productList,
+      });
+    });
   }
 
   @Action(DeleteProduct)
-  DeleteProduct({getState, setState}: StateContext<ProductStateModel>) {
-    return this.productService.DeleteProductInBase()
-      .pipe(tap((result) => {
+    DeleteProduct({getState, setState}: StateContext<ProductStateModel>, {uid}: DeleteProduct) {
+      return this.productService.DeleteProductInBase(uid).apply(() => {
         const state = getState();
+        const filteredArray = state.products.filter(item => item.uid !== uid);
         setState({
           ...state,
-          productas: undefined,
+          products: filteredArray,
         });
-      }));
+      });
+  }
+
+  @Action(SetSelectedProduct)
+  setSelectedProductId({getState, setState}: StateContext<ProductStateModel>, {payload}: SetSelectedProduct) {
+    const state = getState();
+    setState({
+      ...state,
+      selectedProduct: payload
+    });
   }
 }
 
